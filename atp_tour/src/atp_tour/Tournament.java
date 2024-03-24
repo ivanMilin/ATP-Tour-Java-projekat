@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package atp_tour;
 
 import java.util.ArrayList;
@@ -16,16 +12,18 @@ abstract class Tournament {
     protected String tourSurface;
     protected boolean playable;
     protected int numOfSets;
-    //protected ArrayList<Player> contestants;
+    protected ArrayList<Player> contestants;
 
-                                                                         /*,boolean playable, int numOfSets, ArrayList<Player> contestants*/
     public Tournament(String tourName, String tourSurface, String tourType) {
         this.tourName = tourName;
         this.tourType = tourType;
         this.tourSurface = tourSurface;
         this.playable = true;
-        //this.numOfSets = numOfSets;
-        //this.contestants = contestants;
+        
+        if(tourType.equals("Grand Slam"))
+            this.numOfSets = 3;
+        else
+            this.numOfSets = 2;        
     }
     
     // ======== Getters ========
@@ -75,10 +73,9 @@ abstract class Tournament {
         this.numOfSets = numOfSets;
     }
 
-    //public void setContestants(ArrayList<Player> contestants) {
-    //    this.contestants = contestants;
-    //}
-    
+    public void setContestants(ArrayList<Player> contestants) {
+        this.contestants = contestants;
+    }
     
     abstract public void play();
 }

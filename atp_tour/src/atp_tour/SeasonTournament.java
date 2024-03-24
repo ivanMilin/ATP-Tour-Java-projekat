@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package atp_tour;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  *
@@ -19,12 +17,168 @@ public class SeasonTournament extends Tournament
 
     public SeasonTournament(String tourName, String tourType, String tourSurface) {
         super(tourName, tourType, tourSurface);
+        //for(Player player: this.contestants)
+        //{
+        //    player.setInjured(false);
+        //}
+        this.roundOf16 = this.contestants;
+        this.quaterFinalists = new ArrayList<>();
+        this.semiFinalists = new ArrayList<>();
+        this.finalists = new ArrayList<>();
     }
 
     @Override
     public void play()
     {
+        System.out.println("=====================================================================");
+        System.out.println("===================== ROUND OF SIXTEEN PLAYERS ======================");
+        System.out.println("=====================================================================");
         
+        this.roundOf16 = this.contestants;
+        Collections.shuffle(this.roundOf16);
+    
+        for(int i = 0; i < 16; i += 2)
+        {
+            Player winner, loser;
+            Player p1 = roundOf16.get(i);
+            Player p2 = roundOf16.get(i + 1);
+            
+            if(p1.isHeInjured() == true)
+            {
+                winner = p2;
+            }
+            else
+            {
+                Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
+                winner = match.playMatch();
+                
+                if(winner.equals(p1))
+                    loser = p2;
+                else
+                    loser = p1;
+               
+                quaterFinalists.add(winner);
+                
+                if(this.tourType.equals("Grand Slam"))
+                    loser.setAtpPoints(loser.getAtpPoints() + 180);
+                else
+                    loser.setAtpPoints(loser.getAtpPoints() + 100);
+            }    
+        }
+
+        System.out.println("=====================================================================");
+        System.out.println("=====================      QUARTER FINALS      ======================");
+        System.out.println("=====================================================================");
+        
+        Collections.shuffle(this.quaterFinalists);
+        
+        for(int i = 0; i < 8; i += 2)
+        {
+            Player winner, loser;
+            Player p1 = quaterFinalists.get(i);
+            Player p2 = quaterFinalists.get(i+1);
+            
+            if(p1.isHeInjured() == true)
+            {
+                winner = p2;
+            }
+            else
+            {
+                Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
+                winner = match.playMatch();
+                
+                if(winner.equals(p1))
+                    loser = p2;
+                else
+                    loser = p1;
+                
+                semiFinalists.add(winner);
+                
+                if(this.tourType.equals("Grand Slam"))
+                    loser.setAtpPoints(loser.getAtpPoints() + 360);
+                else
+                    loser.setAtpPoints(loser.getAtpPoints() + 200);
+            }
+        }
+        
+        System.out.println("=====================================================================");
+        System.out.println("=====================       SEMI  FINALS       ======================");
+        System.out.println("=====================================================================");
+        
+        Collections.shuffle(this.semiFinalists);
+        
+        for(int i = 0; i < 4; i += 2)
+        {
+            Player winner, loser;
+            Player p1 = semiFinalists.get(i);
+            Player p2 = semiFinalists.get(i+1);
+            
+            if(p1.isHeInjured() == true)
+            {
+                winner = p2;
+            }
+            else
+            {
+                Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
+                winner = match.playMatch();
+                
+                if(winner.equals(p1))
+                    loser = p2;
+                else
+                    loser = p1;
+                
+                finalists.add(winner);
+                
+                if(this.tourType.equals("Grand Slam"))
+                    loser.setAtpPoints(loser.getAtpPoints() + 720);
+                else
+                    loser.setAtpPoints(loser.getAtpPoints() + 400);
+                
+                match.printMatchResult();
+            }
+        }
+        
+        System.out.println("=====================================================================");
+        System.out.println("=====================        FINAL MATCH       ======================");
+        System.out.println("=====================================================================");
+            
+        Player winner,firstPlace, secondPlace;
+        Player p1 = finalists.get(0);
+        Player p2 = finalists.get(1);
+        
+        if(p1.isHeInjured() == true)
+        {
+            firstPlace = p2;
+        }    
+        else
+        {
+            Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
+            winner = match.playMatch();
+            
+            if(winner.equals(p1))
+            {
+                firstPlace  = p1;
+                secondPlace = p2;
+            }    
+            else
+            {
+                firstPlace  = p2;
+                secondPlace = p1;
+            }
+            
+            if(this.tourType.equals("Grand Slam"))
+            {
+                firstPlace.setAtpPoints(firstPlace.getAtpPoints() + 2000);
+                secondPlace.setAtpPoints(secondPlace.getAtpPoints() + 1000);
+            }
+            else
+            {
+                firstPlace.setAtpPoints(firstPlace.getAtpPoints() + 1200);
+                secondPlace.setAtpPoints(secondPlace.getAtpPoints() + 650);
+            } 
+        }   
     }
+    
+    
     
 }

@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package atp_tour;
+
+import java.util.Random;
 
 /**
  *
@@ -15,17 +13,16 @@ public class Player implements Comparable<Player>
     private String preferedSurface;
     private int atpRank;
     private int atpPoints;
-    private boolean injured = false; 
-    private int probabilityChance; 
-    private boolean whichTurn; 
+    private boolean injured;
     
-    public Player(int atpRank, String name, String ability, String preferedSurface, int atpPoints) {
+    public Player(int atpRank, String name, String ability, String preferedSurface, int atpPoints, boolean injured) {
         //System.out.println("Created Player");
         this.name = name;
         this.ability = ability;
         this.preferedSurface = preferedSurface;
         this.atpRank = atpRank;
         this.atpPoints = atpPoints;
+        this.injured = injured;
     }
 
     // ======== Getters ========
@@ -53,14 +50,6 @@ public class Player implements Comparable<Player>
         return injured;
     }
 
-    public int getProbabilityChance() {
-        return probabilityChance;
-    }
-
-    public boolean getWhichTurn() {
-        return whichTurn;
-    }
-
     // ======== Setters ========
 
     public void setName(String name) {
@@ -86,46 +75,43 @@ public class Player implements Comparable<Player>
     public void setInjured(boolean injured) {
         this.injured = injured;
     }
-
-    public void setProbabilityChance(int probabilityChance) {
-        this.probabilityChance = probabilityChance;
-    }
-
-    public void setWhichTurn(boolean whichTurn) {
-        this.whichTurn = whichTurn;
-    }
     
     // ======== Additional methods ========
-    public int ServePointChance(Player opponent, String surface){       
-        if(ability.equals("backhand")){
-            if(!opponent.getAbility().equals("Backhand"))
-                probabilityChance = probabilityChance + 8;
-            else
-                probabilityChance = probabilityChance - 8;
-        }
-        else if(ability.equals("forehand")){
-            probabilityChance = probabilityChance + 10;
-        }
-        else if(ability.equals("serve")){
-            if (!opponent.getAbility().equals("serve"))
-                probabilityChance = probabilityChance + 15; 
-            else 
-                probabilityChance = probabilityChance - 5;
-        }
-        else if(ability.equals("mentality")){
-            if(opponent.getWhichTurn() == true){
-                probabilityChance = probabilityChance + 10;
-                opponent.setProbabilityChance(opponent.getProbabilityChance()-10);   
-            }
-            else
-                probabilityChance = probabilityChance + 5;
-        }
+    public int servePointChance(Player opponent, String surface){   
+        int probabilityChance = 50; 
         
-        if(preferedSurface.equals(surface)){
+        if(opponent.ability.equals("backhand"))
+        {
+            probabilityChance = probabilityChance - 8;
+        }
+        if(ability.equals("forehand"))
+        {
+            probabilityChance = probabilityChance - 10;
+        }
+        if(ability.equals("serve"))
+        {
+            probabilityChance = probabilityChance + 15;
+        }
+        if(opponent.ability.equals("serve"))
+        {
+            probabilityChance = probabilityChance - 5;
+        }
+        if(opponent.ability.equals("mentality"))
+        {
             probabilityChance = probabilityChance + 10;
+        }
+        if(ability.equals("mentality"))
+        {
+            probabilityChance = probabilityChance + 5;
+        }
+        if(preferedSurface.equals(surface))
+        {
+            probabilityChance = probabilityChance + 5;
         }    
-        probabilityChance = probabilityChance - Math.abs(this.atpPoints - opponent.getAtpPoints());
-        return probabilityChance;
+
+        probabilityChance = probabilityChance - Math.abs(this.atpRank - opponent.getAtpRank());
+        
+    return probabilityChance;
     }
     
     @Override
@@ -145,5 +131,17 @@ public class Player implements Comparable<Player>
         else if(this.atpPoints < o.getAtpPoints())
             greaterThan = -1;
         return greaterThan;
+    }
+    
+    public boolean isHeInjured()
+    {
+        this.injured = false;
+        Random random_oneToHundred = new Random();
+        int  injureProbability = random_oneToHundred.nextInt(100)+1;
+        
+        if(injureProbability == 1){
+            this.injured = true;
+        }
+        return injured;
     }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package atp_tour;
 
 import java.io.BufferedReader;
@@ -21,15 +17,25 @@ public class Championship
     public ArrayList<String> tourNames;
 
     public Championship() {
-        players = new ArrayList<>();
-        tournaments = new ArrayList<>();
-        tourNames = new ArrayList<>();
+        this.players = new ArrayList<>();
+        this.tournaments = new ArrayList<>();
+        this.tourNames = new ArrayList<>();
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<Tournament> getTournaments() {
+        return tournaments;
     }
     
-    public void loadFile() throws FileNotFoundException
+    public void loadFile()
     {
         String filePath_to_players_txt     = "./players.txt";
         String filePath_to_tournaments_txt = "./tournaments.txt";
+        
+        System.out.println("\nLoading players and tournaments from files ...");
         
         // loading data from file players.txt into ArrayList<Player> players
         try(BufferedReader players_from_file = new BufferedReader(new FileReader(filePath_to_players_txt)))
@@ -46,7 +52,8 @@ public class Championship
                                             atpRank_name_ability_surface_atpPoints[1],
                                             atpRank_name_ability_surface_atpPoints[2],
                                             atpRank_name_ability_surface_atpPoints[3],
-                                            Integer.parseInt(atpRank_name_ability_surface_atpPoints[4]));
+                                            Integer.parseInt(atpRank_name_ability_surface_atpPoints[4]),
+                                            false);
                     players.add(ply);
                 }
                 
@@ -89,11 +96,12 @@ public class Championship
         {
             System.out.println("Problem with loading data from file tournaments.txt");
         } 
+        System.out.println("Loaded players and tournaments from files ...\n");
     }
     
     public void printData() 
     {
-        System.out.println("==================================================================");
+        System.out.println("=====================================================================");
         // Printing players
         System.out.println("Players:");
         
@@ -102,7 +110,7 @@ public class Championship
             System.out.println("\t"+player.getAtpRank() +". "+ player.getName() +", "+ player.getAbility() +", "+ player.getPreferedSurface() +", "+ player.getAtpPoints());
         }
         
-        System.out.println("==================================================================");
+        System.out.println("=====================================================================");
         // Printing tournaments
         System.out.println("Tournaments:");
         
@@ -110,7 +118,7 @@ public class Championship
         {
             System.out.println("\t"+tournament.getTourName() +", "+ tournament.getTourSurface() +", "+ tournament.getTourType());
         }
-        System.out.println("==================================================================");
+        System.out.println("=====================================================================");
         
         /*
         System.out.println("Tournament names:");
@@ -127,9 +135,16 @@ public class Championship
         for(Player player : players){
             player.setInjured(false);
         }
-        System.out.println("All players are recovered from their injuries and ready to play in the upcoming match");
+        System.out.println("=====================================================================");
+        System.out.println("| All players are recovered and ready to play in the upcoming match |");
+        System.out.println("=====================================================================");
     }
-    
-    
+         
+    public void pokusajPrinta() {
+        for (Player player : players) 
+        {
+            System.out.printf("%-2d - %-18s - %d%n", player.getAtpRank(), player.getName(), player.getAtpPoints());
+        }  
+    }
 }
 

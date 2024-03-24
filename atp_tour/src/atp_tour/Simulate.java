@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package atp_tour;
 
 import java.io.FileNotFoundException;
@@ -22,8 +18,8 @@ public class Simulate
         
         
         cmpshp.loadFile();
-        //cmpshp.printData();
-        //cmpshp.recoverPlayers();
+        cmpshp.printData();
+        cmpshp.recoverPlayers();
         
         String readString;
         int numberOfTournaments = 0;
@@ -75,31 +71,11 @@ public class Simulate
             }
         }
         while(exitDoWhileLoop == 0);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        
+        Tournament seasontournament = new SeasonTournament(stringTourName,"Grand Slam","clay");
+        seasontournament.setContestants(cmpshp.getPlayers());
+        seasontournament.play();
+        cmpshp.pokusajPrinta();
     }
 
     public static boolean isDifferentTourName(String input, int numberOfTournaments)
