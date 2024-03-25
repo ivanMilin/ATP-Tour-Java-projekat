@@ -23,6 +23,7 @@ public class Simulate
         
         String readString;
         int numberOfTournaments = 0;
+        
         do
         {
             System.out.println("How many tournament you want (min 4 - max 13) : ");
@@ -33,16 +34,16 @@ public class Simulate
              
                 if(numberOfTournaments > 14 || numberOfTournaments < 4)
                 {
-                    System.out.println("==========================");
+                    System.out.println("\n==========================");
                     System.out.println("| Number is out of range |");
-                    System.out.println("==========================");
+                    System.out.println("==========================\n");
                 }
             }
             catch(NumberFormatException nfe)
             {
-                System.out.println("==============================================");
+                System.out.println("\n==============================================");
                 System.out.println("| You entered something that is not expected |");
-                System.out.println("==============================================");
+                System.out.println("==============================================\n");
             }
             
         }
@@ -53,39 +54,24 @@ public class Simulate
         String stringTourName;
         int exitDoWhileLoop = 0;
         
-        do
+        while(numberOfTournaments != 0)
         {
             System.out.println("Enter tournament name : ");
             stringTourName = sc.nextLine();   
-            if(!isDifferentTourName(stringTourName,numberOfTournaments))
-            {
-                desiredTourNames.add(stringTourName);
-                System.out.println("You entered tourName " + stringTourName);
-                exitDoWhileLoop = 1;
-            } 
-            else
-            {
-                System.out.println("=====================================================");
-                System.out.println("| Enter tourName that you have not already entered  |");
-                System.out.println("=====================================================");
-            }
-        }
-        while(exitDoWhileLoop == 0);
-        
-        Tournament seasontournament = new SeasonTournament(stringTourName,"Grand Slam","clay");
-        seasontournament.setContestants(cmpshp.getPlayers());
-        seasontournament.play();
-        cmpshp.pokusajPrinta();
-    }
+            System.out.println("You entered tourName " + stringTourName);
 
-    public static boolean isDifferentTourName(String input, int numberOfTournaments)
-    {
-        for(String desiredTourName : desiredTourNames)
-        {
-            if(input.equals(desiredTourName))
-                return true;
-        }
-        return false;
-    }
-    
+            Tournament seasontournament = new SeasonTournament(stringTourName,"clay","Grand Slam");
+            seasontournament.setContestants(cmpshp.getPlayers());
+            seasontournament.play();
+            cmpshp.updateAtpRanks();
+            cmpshp.printCurrentStatus();
+            
+            numberOfTournaments --;
+        }   
+
+        cmpshp.recoverPlayers();
+        AtpFinals atpfinals = new AtpFinals(new ArrayList<>(cmpshp.getPlayers().subList(0,8)));
+        System.out.println("========== Buckle up, ATP Tournament is about to start ... ==========");
+        atpfinals.play();
+    }    
 }

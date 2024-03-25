@@ -17,10 +17,6 @@ public class SeasonTournament extends Tournament
 
     public SeasonTournament(String tourName, String tourType, String tourSurface) {
         super(tourName, tourType, tourSurface);
-        //for(Player player: this.contestants)
-        //{
-        //    player.setInjured(false);
-        //}
         this.roundOf16 = this.contestants;
         this.quaterFinalists = new ArrayList<>();
         this.semiFinalists = new ArrayList<>();
@@ -37,7 +33,7 @@ public class SeasonTournament extends Tournament
         this.roundOf16 = this.contestants;
         Collections.shuffle(this.roundOf16);
     
-        for(int i = 0; i < 16; i += 2)
+        for(int i = 0; i < roundOf16.size(); i += 2)
         {
             Player winner, loser;
             Player p1 = roundOf16.get(i);
@@ -51,19 +47,19 @@ public class SeasonTournament extends Tournament
             {
                 Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
                 winner = match.playMatch();
+                match.printMatchResult();
                 
                 if(winner.equals(p1))
                     loser = p2;
                 else
                     loser = p1;
-               
-                quaterFinalists.add(winner);
                 
                 if(this.tourType.equals("Grand Slam"))
                     loser.setAtpPoints(loser.getAtpPoints() + 180);
                 else
                     loser.setAtpPoints(loser.getAtpPoints() + 100);
             }    
+            quaterFinalists.add(winner);
         }
 
         System.out.println("=====================================================================");
@@ -72,7 +68,7 @@ public class SeasonTournament extends Tournament
         
         Collections.shuffle(this.quaterFinalists);
         
-        for(int i = 0; i < 8; i += 2)
+        for(int i = 0; i < quaterFinalists.size(); i += 2)
         {
             Player winner, loser;
             Player p1 = quaterFinalists.get(i);
@@ -86,19 +82,19 @@ public class SeasonTournament extends Tournament
             {
                 Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
                 winner = match.playMatch();
+                match.printMatchResult();
                 
                 if(winner.equals(p1))
                     loser = p2;
                 else
                     loser = p1;
                 
-                semiFinalists.add(winner);
-                
                 if(this.tourType.equals("Grand Slam"))
                     loser.setAtpPoints(loser.getAtpPoints() + 360);
                 else
                     loser.setAtpPoints(loser.getAtpPoints() + 200);
             }
+            semiFinalists.add(winner);
         }
         
         System.out.println("=====================================================================");
@@ -107,7 +103,7 @@ public class SeasonTournament extends Tournament
         
         Collections.shuffle(this.semiFinalists);
         
-        for(int i = 0; i < 4; i += 2)
+        for(int i = 0; i < semiFinalists.size(); i += 2)
         {
             Player winner, loser;
             Player p1 = semiFinalists.get(i);
@@ -121,28 +117,28 @@ public class SeasonTournament extends Tournament
             {
                 Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
                 winner = match.playMatch();
+                match.printMatchResult();
                 
                 if(winner.equals(p1))
                     loser = p2;
                 else
                     loser = p1;
                 
-                finalists.add(winner);
+                
                 
                 if(this.tourType.equals("Grand Slam"))
                     loser.setAtpPoints(loser.getAtpPoints() + 720);
                 else
                     loser.setAtpPoints(loser.getAtpPoints() + 400);
-                
-                match.printMatchResult();
             }
+            finalists.add(winner);
         }
         
         System.out.println("=====================================================================");
-        System.out.println("=====================        FINAL MATCH       ======================");
+        System.out.println("=====================       FINAL  MATCH       ======================");
         System.out.println("=====================================================================");
             
-        Player winner,firstPlace, secondPlace;
+        Player winner, firstPlace, secondPlace;
         Player p1 = finalists.get(0);
         Player p2 = finalists.get(1);
         
@@ -154,6 +150,7 @@ public class SeasonTournament extends Tournament
         {
             Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
             winner = match.playMatch();
+            match.printMatchResult();
             
             if(winner.equals(p1))
             {

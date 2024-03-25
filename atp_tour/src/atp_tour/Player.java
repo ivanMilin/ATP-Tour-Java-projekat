@@ -13,6 +13,7 @@ public class Player implements Comparable<Player>
     private String preferedSurface;
     private int atpRank;
     private int atpPoints;
+    private int atpCounter;
     private boolean injured;
     
     public Player(int atpRank, String name, String ability, String preferedSurface, int atpPoints, boolean injured) {
@@ -23,6 +24,7 @@ public class Player implements Comparable<Player>
         this.atpRank = atpRank;
         this.atpPoints = atpPoints;
         this.injured = injured;
+        this.atpCounter = 0;
     }
 
     // ======== Getters ========
@@ -50,6 +52,10 @@ public class Player implements Comparable<Player>
         return injured;
     }
 
+    public int getAtpCounter() {
+        return atpCounter;
+    }
+
     // ======== Setters ========
 
     public void setName(String name) {
@@ -74,6 +80,10 @@ public class Player implements Comparable<Player>
 
     public void setInjured(boolean injured) {
         this.injured = injured;
+    }
+
+    public void setAtpCounter(int atpCounter) {
+        this.atpCounter = atpCounter;
     }
     
     // ======== Additional methods ========
@@ -116,8 +126,8 @@ public class Player implements Comparable<Player>
     
     @Override
     public String toString(){
-        return "Player: " + name + " ability : " + ability + "preferedSurface : " + 
-                preferedSurface + " atpRank : " + atpRank + "atpPoints : " + atpPoints + " injured : " + injured;
+        return "Player: " + name + " ,ability : " + ability + " ,preferedSurface : " + 
+                preferedSurface + " ,atpRank : " + atpRank + " ,atpPoints : " + atpPoints + " ,injured : " + injured + " \n";
     }
 
     @Override
@@ -126,9 +136,9 @@ public class Player implements Comparable<Player>
         if(o == null)
             return 1;
         int greaterThan = 0;
-        if(this.atpPoints > o.getAtpPoints())
+        if(this.atpPoints < o.getAtpPoints())
             greaterThan = 1;
-        else if(this.atpPoints < o.getAtpPoints())
+        else if(this.atpPoints > o.getAtpPoints())
             greaterThan = -1;
         return greaterThan;
     }

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -135,15 +136,24 @@ public class Championship
         for(Player player : players){
             player.setInjured(false);
         }
-        System.out.println("=====================================================================");
+        System.out.println("\n=====================================================================");
         System.out.println("| All players are recovered and ready to play in the upcoming match |");
         System.out.println("=====================================================================");
     }
+    
+    public void updateAtpRanks()
+    {
+        Collections.sort(players);
+        for(int i = 0; i < players.size(); i++)
+        {
+            players.get(i).setAtpRank(i+1);
+        }
+    }
          
-    public void pokusajPrinta() {
+    public void printCurrentStatus() {
         for (Player player : players) 
         {
-            System.out.printf("%-2d - %-18s - %d%n", player.getAtpRank(), player.getName(), player.getAtpPoints());
+            System.out.println(String.format("%-2d  %-20s : %-4d", player.getAtpRank(), player.getName(), player.getAtpPoints()));
         }  
     }
 }
