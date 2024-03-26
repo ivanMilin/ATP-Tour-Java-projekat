@@ -136,9 +136,7 @@ public class Championship
         for(Player player : players){
             player.setInjured(false);
         }
-        System.out.println("\n=====================================================================");
-        System.out.println("| All players are recovered and ready to play in the upcoming match |");
-        System.out.println("=====================================================================");
+        System.out.println("\nAll players are recovered and ready to play in the upcoming match");
     }
     
     public void updateAtpRanks()

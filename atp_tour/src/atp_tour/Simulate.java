@@ -56,7 +56,7 @@ public class Simulate
         
         while(numberOfTournaments != 0)
         {
-            System.out.println("Enter tournament name : ");
+            System.out.println("\nEnter tournament name : ");
             stringTourName = sc.nextLine();   
             System.out.println("You entered tourName " + stringTourName);
 
@@ -71,7 +71,7 @@ public class Simulate
 
         cmpshp.recoverPlayers();
         AtpFinals atpfinals = new AtpFinals(new ArrayList<>(cmpshp.getPlayers().subList(0,8)));
-        System.out.println("========== Buckle up, ATP Tournament is about to start ... ==========");
+        System.out.println("\nBuckle up, ATP Tournament is about to start ...");
         atpfinals.play();
     }    
 }

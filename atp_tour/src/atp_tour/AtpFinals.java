@@ -44,27 +44,36 @@ public class AtpFinals extends Tournament
     @Override
     public void play()
     {
-        System.out.println("Players from groupA : "/* + groupA.size()*/);
+        System.out.println("\nPlayers from groupA : "/* + groupA.size()*/);
         for(Player membersA : groupA)
         {
             System.out.println("    " + membersA.getAtpRank()+". " + membersA.getName());
         }        
         
-        System.out.println("Players from groupB : " /*+ groupB.size()*/);
+        System.out.println("\nPlayers from groupB : " /*+ groupB.size()*/);
         for(Player membersB : groupB)
         {
             System.out.println("    " + membersB.getAtpRank()+". " + membersB.getName());
         }
+        
         simulateGroupA_GroupB(groupA);
         simulateGroupA_GroupB(groupB);
         
-        System.out.println("==========================   SEMI  FINAL   ==========================");
+        System.out.println("\nPlayers for SEMI final");
         for (Player player : semiFinalists) {
-            System.out.println(player.getName() + " - numberOfWins " + player.getAtpCounter() + " - atpPoints " + player.getAtpPoints());
+            System.out.println("    " + player.getName() + " - numberOfWins " + player.getAtpCounter() + " - atpPoints " + player.getAtpPoints());
             player.setAtpCounter(0);
         }
-        System.out.println("=====================================================================\n");
-        //simulateHalfOfAtpPlayers(semiFinalists);
+        
+        simulateSemiFinal(semiFinalists);
+        
+        System.out.println("\nPlayers for FINAL match");
+        for (Player player : finalists) {
+            System.out.println("    " + player.getName() + " - numberOfWins " + player.getAtpCounter() + " - atpPoints " + player.getAtpPoints());
+            player.setAtpCounter(0);
+        }
+        
+        simulateFinalMatch();
     }
     
     public void simulateGroupA_GroupB(ArrayList<Player> halfPlayers)
@@ -111,6 +120,74 @@ public class AtpFinals extends Tournament
     
     public void simulateSemiFinal(ArrayList<Player> semifinalists)
     {
+        for(int i = 0; i < semiFinalists.size(); i++)
+        {
+            for(int j = i + 1; j < semiFinalists.size(); j++)
+            {
+                Player winner, loser;
+                Player p1 = semiFinalists.get(i);
+                Player p2 = semiFinalists.get(j);
+
+                if(p1.isHeInjured() == true)
+                {
+                    winner = p2;
+                    semiFinalists.get(j).setAtpCounter(semiFinalists.get(j).getAtpCounter() + 1);
+                    semiFinalists.get(j).setAtpPoints(semiFinalists.get(j).getAtpPoints() + 400);
+                }
+                else
+                {
+                    Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
+                    winner = match.playMatch();
+
+                    if(winner.equals(p1))
+                    {
+                        semiFinalists.get(i).setAtpCounter(semiFinalists.get(i).getAtpCounter() + 1);
+                        semiFinalists.get(i).setAtpPoints(semiFinalists.get(i).getAtpPoints() + 400);
+                        loser = p2;    
+                    }
+                    else
+                    {
+                        loser = p1;
+                        semiFinalists.get(j).setAtpCounter(semiFinalists.get(j).getAtpCounter() + 1);
+                        semiFinalists.get(j).setAtpPoints(semiFinalists.get(j).getAtpPoints() + 400);
+                    }
+                }
+
+            }
+        }
+
+        Comparator<Player> numberOfWins = Comparator.comparingInt(Player::getAtpCounter).reversed();
+        Collections.sort(semiFinalists, numberOfWins);
         
+        finalists.addAll(semiFinalists.subList(0, 2));
+    }
+    
+    public void simulateFinalMatch()
+    {
+        Player winner;
+        Player p1 = finalists.get(0);
+        Player p2 = finalists.get(1);
+        
+        if(p1.isHeInjured() == true)
+        {
+            winner = p2;
+            p2.setAtpPoints(p2.getAtpPoints() + 500);
+        }
+        else
+        {
+            Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
+            winner = match.playMatch();
+            
+            if(winner.equals(p1))
+            {
+                p1.setAtpPoints(p1.getAtpPoints() + 500);
+                System.out.println("\nPlayer " + p1.getName() + ", " + p1.getAtpPoints() + " won ATP Finals tournament\n");
+            }
+            else
+            { 
+                p2.setAtpPoints(p2.getAtpPoints() + 500);
+                System.out.println("\nPlayer " + p2.getName() + ", " + p2.getAtpPoints() + " won ATP Finals tournament\n");
+            }
+        }
     }
 }
