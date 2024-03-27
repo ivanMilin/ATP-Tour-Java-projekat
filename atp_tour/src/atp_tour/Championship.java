@@ -154,5 +154,15 @@ public class Championship
             System.out.println(String.format("%-2d  %-20s : %-4d", player.getAtpRank(), player.getName(), player.getAtpPoints()));
         }  
     }
+    
+    public Tournament getTournamentByTourName(String tourName)
+    {
+        for(Tournament tournament : tournaments)
+        {
+            if(tournament.getTourName().equals(tourName))
+                return tournament;
+        }
+        return null;
+    }
 }
 

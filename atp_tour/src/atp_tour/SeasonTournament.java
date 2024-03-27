@@ -42,6 +42,8 @@ public class SeasonTournament extends Tournament
             if(p1.isHeInjured() == true)
             {
                 winner = p2;
+                System.out.println(p1.getName() + " is injured");
+                System.out.println(p2.getName() + " won this match\n");
             }
             else
             {
@@ -77,6 +79,8 @@ public class SeasonTournament extends Tournament
             if(p1.isHeInjured() == true)
             {
                 winner = p2;
+                System.out.println(p1.getName() + " is injured");
+                System.out.println(p2.getName() + " won this match\n");
             }
             else
             {
@@ -112,6 +116,8 @@ public class SeasonTournament extends Tournament
             if(p1.isHeInjured() == true)
             {
                 winner = p2;
+                System.out.println(p1.getName() + " is injured");
+                System.out.println(p2.getName() + " won this match\n");
             }
             else
             {
@@ -145,6 +151,8 @@ public class SeasonTournament extends Tournament
         if(p1.isHeInjured() == true)
         {
             firstPlace = p2;
+            System.out.println(p1.getName() + " is injured");
+            System.out.println(p2.getName() + " won this match\n");
         }    
         else
         {

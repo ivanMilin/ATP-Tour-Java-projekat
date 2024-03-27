@@ -148,6 +148,7 @@ public class Match
 
         while (true) 
         {
+            this.firstPlayerServes = !this.firstPlayerServes;
             boolean probability = chanceEvent(whoServesNow().servePointChance(changeWhosHasToServe(), matchSurface));
             
             if (probability)

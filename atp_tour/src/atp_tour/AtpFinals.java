@@ -69,7 +69,7 @@ public class AtpFinals extends Tournament
         
         System.out.println("\nPlayers for FINAL match");
         for (Player player : finalists) {
-            System.out.println("    " + player.getName() + " - numberOfWins " + player.getAtpCounter() + " - atpPoints " + player.getAtpPoints());
+            System.out.println("    " + player.getName() + " - atpPoints " + player.getAtpPoints());
             player.setAtpCounter(0);
         }
         
@@ -91,6 +91,8 @@ public class AtpFinals extends Tournament
                     winner = p2;
                     halfPlayers.get(j).setAtpCounter(halfPlayers.get(j).getAtpCounter() + 1);
                     halfPlayers.get(j).setAtpPoints(halfPlayers.get(j).getAtpPoints() + 200);
+                    System.out.println(p1.getName() + " is injured");
+                    System.out.println(p2.getName() + " won this match\n");
                 }
                 else
                 {
@@ -133,6 +135,8 @@ public class AtpFinals extends Tournament
                     winner = p2;
                     semiFinalists.get(j).setAtpCounter(semiFinalists.get(j).getAtpCounter() + 1);
                     semiFinalists.get(j).setAtpPoints(semiFinalists.get(j).getAtpPoints() + 400);
+                    System.out.println(p1.getName() + " is injured");
+                    System.out.println(p2.getName() + " won this match\n");
                 }
                 else
                 {
@@ -172,6 +176,8 @@ public class AtpFinals extends Tournament
         {
             winner = p2;
             p2.setAtpPoints(p2.getAtpPoints() + 500);
+            System.out.println(p1.getName() + " is injured");
+            System.out.println(p2.getName() + " won this match\n");
         }
         else
         {
