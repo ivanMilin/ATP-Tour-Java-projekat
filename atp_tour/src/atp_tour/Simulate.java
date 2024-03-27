@@ -99,7 +99,8 @@ public class Simulate
 }
 
 
-// Round robin izmeni za semifinalu 
-// U playTieBreak treba da igraci da se menjaju (Ono sa uzvicnik) 
+// Izmeni u semifinal da ne bude round robin, treba prvi iz A sa drugim iz B i prvi iz B sa drugim iz A
+// U playTieBreak treba da se igraci menjaju (ono sa uzvicnikom) 
 // playable postavi na false da ne moze isti turnir vise puta da se igra
 // recover players stavi u while loop
+// Dodao sam da se ispise ko se povredio

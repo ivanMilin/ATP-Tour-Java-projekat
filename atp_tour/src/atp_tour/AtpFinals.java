@@ -122,48 +122,73 @@ public class AtpFinals extends Tournament
     
     public void simulateSemiFinal(ArrayList<Player> semifinalists)
     {
-        for(int i = 0; i < semiFinalists.size(); i++)
+        // First pair of semifinalists play here
+        Player winner1, loser1;
+        
+        Player player_firstA  = semiFinalists.get(0);
+        Player player_secondB = semiFinalists.get(3);
+
+        if(player_firstA.isHeInjured() == true)
         {
-            for(int j = i + 1; j < semiFinalists.size(); j++)
+            winner1 = player_secondB;
+            semiFinalists.get(3).setAtpCounter(semiFinalists.get(3).getAtpCounter() + 1);
+            semiFinalists.get(3).setAtpPoints(semiFinalists.get(3).getAtpPoints() + 400);
+            System.out.println(player_firstA.getName() + " is injured");
+            System.out.println(player_secondB.getName() + " won this match\n");
+        }
+        else
+        {
+            Match match = new Match(player_firstA, player_secondB, this.tourSurface, this.numOfSets);
+            winner1 = match.playMatch();
+
+            if(winner1.equals(player_firstA))
             {
-                Player winner, loser;
-                Player p1 = semiFinalists.get(i);
-                Player p2 = semiFinalists.get(j);
-
-                if(p1.isHeInjured() == true)
-                {
-                    winner = p2;
-                    semiFinalists.get(j).setAtpCounter(semiFinalists.get(j).getAtpCounter() + 1);
-                    semiFinalists.get(j).setAtpPoints(semiFinalists.get(j).getAtpPoints() + 400);
-                    System.out.println(p1.getName() + " is injured");
-                    System.out.println(p2.getName() + " won this match\n");
-                }
-                else
-                {
-                    Match match = new Match(p1, p2, this.tourSurface, this.numOfSets);
-                    winner = match.playMatch();
-
-                    if(winner.equals(p1))
-                    {
-                        semiFinalists.get(i).setAtpCounter(semiFinalists.get(i).getAtpCounter() + 1);
-                        semiFinalists.get(i).setAtpPoints(semiFinalists.get(i).getAtpPoints() + 400);
-                        loser = p2;    
-                    }
-                    else
-                    {
-                        loser = p1;
-                        semiFinalists.get(j).setAtpCounter(semiFinalists.get(j).getAtpCounter() + 1);
-                        semiFinalists.get(j).setAtpPoints(semiFinalists.get(j).getAtpPoints() + 400);
-                    }
-                }
-
+                semiFinalists.get(0).setAtpCounter(semiFinalists.get(0).getAtpCounter() + 1);
+                semiFinalists.get(0).setAtpPoints(semiFinalists.get(0).getAtpPoints() + 400);
+                loser1 = player_secondB;    
+            }
+            else
+            {
+                loser1 = player_firstA;
+                semiFinalists.get(3).setAtpCounter(semiFinalists.get(3).getAtpCounter() + 1);
+                semiFinalists.get(3).setAtpPoints(semiFinalists.get(3).getAtpPoints() + 400);
             }
         }
+        finalists.add(winner1);
 
-        Comparator<Player> numberOfWins = Comparator.comparingInt(Player::getAtpCounter).reversed();
-        Collections.sort(semiFinalists, numberOfWins);
+        //Second pair of semifinalists play here
+        Player winner2, loser2;
+        Player player_firstB  = semiFinalists.get(2);
+        Player player_secondA = semiFinalists.get(1);
         
-        finalists.addAll(semiFinalists.subList(0, 2));
+        if(player_firstB.isHeInjured() == true)
+        {
+            winner2 = player_secondA;
+            semiFinalists.get(1).setAtpCounter(semiFinalists.get(1).getAtpCounter() + 1);
+            semiFinalists.get(1).setAtpPoints(semiFinalists.get(1).getAtpPoints() + 400);
+            System.out.println(player_firstB.getName() + " is injured");
+            System.out.println(player_secondA.getName() + " won this match\n");
+        }
+        else
+        {
+            Match match = new Match(player_firstB, player_secondA, this.tourSurface, this.numOfSets);
+            winner2 = match.playMatch();
+
+            if(winner2.equals(player_firstB))
+            {
+                semiFinalists.get(2).setAtpCounter(semiFinalists.get(2).getAtpCounter() + 1);
+                semiFinalists.get(2).setAtpPoints(semiFinalists.get(2).getAtpPoints() + 400);
+                loser2 = player_secondA;    
+            }
+            else
+            {
+                loser2 = player_firstB;
+                semiFinalists.get(1).setAtpCounter(semiFinalists.get(1).getAtpCounter() + 1);
+                semiFinalists.get(1).setAtpPoints(semiFinalists.get(1).getAtpPoints() + 400);
+            }
+        }
+        
+        finalists.add(winner2);
     }
     
     public void simulateFinalMatch()
